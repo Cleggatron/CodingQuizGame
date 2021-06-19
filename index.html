@@ -10,6 +10,43 @@
 
 </head>
 <body>
-    
+    <header>
+    <!--Include the high score button and the timer-->
+        <p>Your Highscores</p>
+        <p>Timer: <span class="timer"></span></p>
+    </header>
+
+    <div>
+        <!--Contains the question and the answers-->
+        <h2><span class="question"></span></h2>
+        <ul>
+            <li class ="question1"></li>
+            <li class ="question2"></li>
+            <li class ="question3"></li>
+            <li class ="question3"></li>
+        </ul>
+        <h3 class="checkAnswer"></h3>
+    </div>
+
+    <div>
+        <!--Contains the form for the submitting the high score initial-->
+        <h2>All Done!</h2>
+        <p>Your final score is: <span class="finalScore"></span></p>
+        <label for="initials">Enter Initials:</label>
+        <input type="text" id="initials" name="initials" placeholder="Initials">
+        <button type="submit" class="submitScore" name="submitScore">Submit Score</button>
+
+    </div>
+
+    <div>
+        <!--Contains the list of the high scores and the button to clear high scores-->
+        <h2>Highscores</h2>
+        <ol class = highscores>
+
+        </ol>
+        <button type="submit" name="goBack" class="goback">Go Back</button>
+        <button type="submit" name="clearHighScores" class="clearHighScores">Clear High Scores</button>
+    </div>
+
 </body>
 </html>
