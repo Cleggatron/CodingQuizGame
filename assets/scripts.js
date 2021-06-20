@@ -3,9 +3,11 @@ var questionPage = document.querySelector("#questionPage");
 var endgamePage = document.querySelector("#endgamePage");
 var scorecardPage = document.querySelector("#scorecardPage");
 
+var highScores = document.querySelector("#highscores");
+
 //variable to log what should be visible at the current time
 var activePage = startPage;
-var leaderboard = []
+var leaderboard = [];
 
 
 
@@ -43,4 +45,18 @@ function submitScore(initials, currentScore){
 
         localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
     }
+}
+
+
+//print the leaderboard
+function updateScorecards(){
+    leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
+    //print our leaderboard
+    for(i = 0; i < leaderboard.length; i++){
+        var content = leaderboard[i];
+        var li = document.createElement("li");
+        li.textContent = content.name + ": " + content.score;
+        highScores.appendChild(li);
+    }
+
 }
