@@ -8,12 +8,22 @@ header{
     justify-content: space-between;
 }
 
+main{
+    min-height: 100%;
+    padding: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;    
+}
+
 div{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 0 15%;
+    padding: 50px;
+    height: 100%;
 }
 
 
@@ -24,4 +34,10 @@ button, li{
     color: white;
     padding: 5px 20px;
     margin: 5px 0;
+}
+
+
+/* starting display settings */
+.questionPage, .endgamePage, .scorecardPage{
+    display: none;
 }
