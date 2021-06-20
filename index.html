@@ -17,13 +17,13 @@
     </header>
     <main class="wrapper">
         
-        <div class="pageStart">
+        <div id="startPage">
             <h2>Coding Quiz Challenge</h2>
             <p>Try to answer the following code related questions within the time limit. Keep in mind that incorrect answers wil penalise your remaining time by ten seconds!</p>
             <button type="submit" id="startQuiz" name="startQuiz">Start Game</button>
         </div>
 
-        <div class = "questionPage">
+        <div id ="questionPage">
             <!--Contains the question and the answers-->
             <h2><span class="question">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis corporis praesentium neque incidunt recusandae molestiae itaque excepturi iste aliquid odit?</span></h2>
             <ul>
@@ -35,7 +35,7 @@
             <h3 class="checkAnswer"></h3>
         </div>
 
-        <div class="endgamePage">
+        <div id="endgamePage">
             <!--Contains the form for the submitting the high score initial-->
             <h2>All Done!</h2>
             <p>Your final score is: <span class="finalScore"></span></p>
@@ -45,7 +45,7 @@
 
         </div>
 
-        <div class="scorecardPage">
+        <div id="scorecardPage">
             <!--Contains the list of the high scores and the button to clear high scores-->
             <h2>Highscores</h2>
             <ol class = highscores>
@@ -54,6 +54,8 @@
             <button type="submit" name="goBack" class="goback">Go Back</button>
             <button type="submit" name="clearHighScores" class="clearHighScores">Clear High Scores</button>
         </div>
+
+        <script src="./assets/scripts.js"></script>
     </main>
 </body>
 </html>

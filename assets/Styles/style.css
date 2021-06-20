@@ -38,6 +38,6 @@ button, li{
 
 
 /* starting display settings */
-.questionPage, .endgamePage, .scorecardPage{
+#questionPage, #endgamePage, #scorecardPage{
     display: none;
 }
