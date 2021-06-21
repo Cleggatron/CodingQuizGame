@@ -2,13 +2,15 @@ var startPage = document.querySelector("#startPage");
 var questionPage = document.querySelector("#questionPage");
 var endgamePage = document.querySelector("#endgamePage");
 var scorecardPage = document.querySelector("#scorecardPage");
+var timer = document.querySelector("#timer")
+var startquiz = document.querySelector("#startQuiz")
 
 var highScores = document.querySelector("#highscores");
 
 //variable to log what should be visible at the current time
 var activePage = startPage;
-var leaderboard = [];
 
+var leaderboard = [];
 var questions =[
     {question:"Q1: Data in an array is stored in...?", answer1: "Elements", answer2: "Compounds", answer3: "Solutions", answer4: "Boxes", actualAnswer: "answer1"},
     {question:"Q2: If we want to apply the same style to a group of html elements we would use...?", answer1: "ID", answer2: "A Class", answer3: "A Variable", answer4: "The DOM", actualAnswer: "answer2"},
@@ -21,8 +23,20 @@ var questions =[
     {question:"Q9: What is the latest version of CSS?", answer1: "CSS1", answer2: "CSS4", answer3: "CSS2", answer4: "CSS3", actualAnswer: "answer3"},
     {question:"Q10: <main>, <header>, and <footer> are examples of...?", answer1: "Semantic HTML elements", answer2: "Element IDs", answer3: "Inline elements", answer4: "Element classes", actualAnswer: "answer1"}];
 
+var secondsLeft = 75;
 
+//our timer 
+function startGame(){
+    var timerInterval = setInterval(function(){
+        secondsLeft--;
+        timer.textContent = secondsLeft;
 
+        if(secondsLeft === 0){
+            clearInterval(timerInterval);
+            changeDisplay(questionPage, endgamePage);
+        }
+    },1000)
+}
 
 
 
@@ -71,3 +85,11 @@ function populateLeaderboard(){
     }
 
 }
+
+
+//event listeners
+startquiz.addEventListener("click", function(event){
+    event.preventDefault();
+    changeDisplay(startPage, questionPage);
+    startGame();
+})
