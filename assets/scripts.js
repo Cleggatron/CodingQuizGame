@@ -4,9 +4,13 @@ var endgamePage = document.querySelector("#endgamePage");
 var scorecardPage = document.querySelector("#scorecardPage");
 var timer = document.querySelector("#timer")
 var startquiz = document.querySelector("#startQuiz")
+var submitScore = document.querySelector("#submitScore");
+var questionTextEl = document.querySelector("#question");
+var answerTextEl = document.querySelectorAll(".answer");
+
 
 var highScores = document.querySelector("#highscores");
-
+var questionNumber = 0;
 //variable to log what should be visible at the current time
 var activePage = startPage;
 
@@ -21,9 +25,12 @@ var questions =[
     {question:"Q7: Which company developed Javascript?", answer1: "Google", answer2: "Facebook", answer3: "Starbucks", answer4: "Netscape", actualAnswer: "answer4"},
     {question:"Q8: How do we access an element of an array?", answer1: "arrayName.elementNumber", answer2: "arrayName[elementNumber]", answer3: "arrayName,elementNumber", answer4: "arrayName + elementNumber", actualAnswer: "answer2"},
     {question:"Q9: What is the latest version of CSS?", answer1: "CSS1", answer2: "CSS4", answer3: "CSS2", answer4: "CSS3", actualAnswer: "answer3"},
-    {question:"Q10: <main>, <header>, and <footer> are examples of...?", answer1: "Semantic HTML elements", answer2: "Element IDs", answer3: "Inline elements", answer4: "Element classes", actualAnswer: "answer1"}];
+    {question:"Q10: '<main>', '<header>', and '<footer>' are examples of...?", answer1: "Semantic HTML elements", answer2: "Element IDs", answer3: "Inline elements", answer4: "Element classes", actualAnswer: "answer1"}];
 
-var secondsLeft = 75;
+var secondsLeft = 10;
+var playerScore = 0;
+
+
 
 //our timer 
 function startGame(){
@@ -39,8 +46,6 @@ function startGame(){
 }
 
 
-
-
 //function to update the display
 function changeDisplay(currentPage, destinationPage){
     currentPage.setAttribute("style", "display: none;");
@@ -50,7 +55,7 @@ function changeDisplay(currentPage, destinationPage){
 }
 
 //function to update the scores on local storrage
-function submitScore(initials, currentScore){
+function storeScore(initials, currentScore){
     var submission = {
         name: initials.trim(),
         score: currentScore
@@ -83,7 +88,14 @@ function populateLeaderboard(){
         li.textContent = content.name + ": " + content.score;
         highScores.appendChild(li);
     }
+}
 
+function changeQuestion(){
+    questionTextEl.innerHTML = questions[questionNumber].question;
+    answerTextEl[0].innerHTML = questions[questionNumber].answer1;
+    answerTextEl[1].innerHTML = questions[questionNumber].answer2;
+    answerTextEl[2].innerHTML = questions[questionNumber].answer3;
+    answerTextEl[3].innerHTML = questions[questionNumber].answer4;
 }
 
 
@@ -93,3 +105,19 @@ startquiz.addEventListener("click", function(event){
     changeDisplay(startPage, questionPage);
     startGame();
 })
+
+
+submitScore.addEventListener("click", function(event){
+    event.preventDefault();
+    //Variable stored locally to refresh on click
+    var initials = document.querySelector('#initials').value;
+    if(initials === ""){
+        confirm("You have not entered your initials. Please enter these to submit your score.");
+        return;
+    }else{
+        storeScore(initials, playerScore);
+        changeDisplay(endgamePage, scorecardPage);
+        populateLeaderboard();
+    }
+});
+
