@@ -1,10 +1,13 @@
-var startPageEL = document.querySelector("#startPage");
+var startPageEl = document.querySelector("#startPage");
 var questionPageEl = document.querySelector("#questionPage");
 var endgamePageEl = document.querySelector("#endgamePage");
 var scorecardPageEl = document.querySelector("#scorecardPage");
-var timer = document.querySelector("#timer")
-var startquizEl = document.querySelector("#startQuiz")
+var goToHighscoresEl = document.querySelector("#highscores");
+var returnToStartEl = document.querySelector("#returnToStart");
+var timerEl = document.querySelector("#timer")
+var startQuizEl = document.querySelector("#startQuiz")
 var submitScoreEl = document.querySelector("#submitScore");
+var checkAnswerEl = document.querySelector("#checkAnswer");
 var questionTextEl = document.querySelector("#question");
 
 var answerTextEl = document.querySelectorAll(".answer"); //select all and access indivdually to populate answer fields
@@ -29,7 +32,7 @@ var questions =[
     {question:"Q9: What is the latest version of CSS?", answer1: "CSS1", answer2: "CSS4", answer3: "CSS2", answer4: "CSS3", actualAnswer: "answer3"},
     {question:"Q10: main, header, and footer are examples of...?", answer1: "Semantic HTML elements", answer2: "Element IDs", answer3: "Inline elements", answer4: "Element classes", actualAnswer: "answer1"}];
 
-var secondsLeft = 10;
+var secondsLeft = 75;
 var playerScore = 0;
 
 
@@ -38,12 +41,26 @@ var playerScore = 0;
 function startGame(){
     var timerInterval = setInterval(function(){
         secondsLeft--;
-        timer.textContent = secondsLeft;
+        timerEl.textContent = secondsLeft;
+        
+        
+        questionPageEl.addEventListener("click",function(event){
+            event.preventDefault();
+            var element = event.target;
+        
+            if (element.matches("li")){
+                var state = element.getAttribute("data-answer");
+                checkAnswer(state);
+            }
+        
+        })
 
-        if(secondsLeft === 0){
+        if(secondsLeft <= 0){
             clearInterval(timerInterval);
             changeDisplay(questionPageEl, endgamePageEl);
+
         }
+        console.log(secondsLeft);
     },1000)
 }
 
@@ -100,11 +117,23 @@ function changeQuestion(){
     answerTextEl[3].innerHTML = questions[questionNumber].answer4;
 }
 
+function checkAnswer(playerAnswer){
+    if(playerAnswer === questions[questionNumber].actualAnswer){
+    playerScore++;
+    questionNumber++;
+    changeQuestion();
+    checkAnswerEl.innerHTML = "Correct!";
+    return;
+    }
 
+    checkAnswerEl = "Incorrect";
+    secondsLeft = secondsLeft - 10;
+
+}
 
 
 //event listeners
-startquizEl.addEventListener("click", function(event){
+startQuizEl.addEventListener("click", function(event){
     event.preventDefault();
     changeDisplay(startPageEl, questionPageEl);
     startGame();
@@ -126,4 +155,23 @@ submitScoreEl.addEventListener("click", function(event){
     }
 });
 
-questionPageEl
+// questionPageEl.addEventListener("click",function(event){
+//     event.preventDefault();
+//     var element = event.target;
+
+//     if (element.matches("li")){
+//         var state = element.getAttribute("data-answer");
+//         checkAnswer(state);
+//     }
+
+// })
+
+goToHighscoresEl.addEventListener("click",function(event){
+    event.preventDefault();
+    changeDisplay(activePage, scorecardPageEl);
+})
+
+returnToStartEl.addEventListener("click",function(event){
+    event.preventDefault();
+    changeDisplay(activePage, startPageEl);
+})
