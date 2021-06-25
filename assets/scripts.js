@@ -9,13 +9,10 @@ var startQuizEl = document.querySelector("#startQuiz")
 var submitScoreEl = document.querySelector("#submitScore");
 var checkAnswerEl = document.querySelector("#checkAnswer");
 var questionTextEl = document.querySelector("#question");
-
 var answerTextEl = document.querySelectorAll(".answer"); //select all and access indivdually to populate answer fields
 
-
-
 var highScores = document.querySelector("#highscores");
-var questionNumber = 0;
+
 //variable to log what should be visible at the current time
 var activePage = startPageEl;
 
@@ -29,40 +26,13 @@ var questions =[
     {question:"Q6: Which of the following is not a data type in Javascript?", answer1: "Object", answer2: "Long", answer3: "Undefined", answer4: "Number", actualAnswer: "answer2"},
     {question:"Q7: Which company developed Javascript?", answer1: "Google", answer2: "Facebook", answer3: "Starbucks", answer4: "Netscape", actualAnswer: "answer4"},
     {question:"Q8: How do we access an element of an array?", answer1: "arrayName.elementNumber", answer2: "arrayName[elementNumber]", answer3: "arrayName,elementNumber", answer4: "arrayName + elementNumber", actualAnswer: "answer2"},
-    {question:"Q9: What is the latest version of CSS?", answer1: "CSS1", answer2: "CSS4", answer3: "CSS2", answer4: "CSS3", actualAnswer: "answer3"},
+    {question:"Q9: What is the latest version of CSS?", answer1: "CSS1", answer2: "CSS4", answer3: "CSS2", answer4: "CSS3", actualAnswer: "answer4"},
     {question:"Q10: main, header, and footer are examples of...?", answer1: "Semantic HTML elements", answer2: "Element IDs", answer3: "Inline elements", answer4: "Element classes", actualAnswer: "answer1"}];
 
 var secondsLeft = 75;
 var playerScore = 0;
+var questionNumber = 0;
 
-
-
-//our timer 
-function startGame(){
-    var timerInterval = setInterval(function(){
-        secondsLeft--;
-        timerEl.textContent = secondsLeft;
-        
-        
-        questionPageEl.addEventListener("click",function(event){
-            event.preventDefault();
-            var element = event.target;
-        
-            if (element.matches("li")){
-                var state = element.getAttribute("data-answer");
-                checkAnswer(state);
-            }
-        
-        })
-
-        if(secondsLeft <= 0){
-            clearInterval(timerInterval);
-            changeDisplay(questionPageEl, endgamePageEl);
-
-        }
-        console.log(secondsLeft);
-    },1000)
-}
 
 
 //function to update the display
@@ -117,19 +87,6 @@ function changeQuestion(){
     answerTextEl[3].innerHTML = questions[questionNumber].answer4;
 }
 
-function checkAnswer(playerAnswer){
-    if(playerAnswer === questions[questionNumber].actualAnswer){
-    playerScore++;
-    questionNumber++;
-    changeQuestion();
-    checkAnswerEl.innerHTML = "Correct!";
-    return;
-    }
-
-    checkAnswerEl = "Incorrect";
-    secondsLeft = secondsLeft - 10;
-
-}
 
 
 //event listeners
@@ -155,16 +112,6 @@ submitScoreEl.addEventListener("click", function(event){
     }
 });
 
-// questionPageEl.addEventListener("click",function(event){
-//     event.preventDefault();
-//     var element = event.target;
-
-//     if (element.matches("li")){
-//         var state = element.getAttribute("data-answer");
-//         checkAnswer(state);
-//     }
-
-// })
 
 goToHighscoresEl.addEventListener("click",function(event){
     event.preventDefault();
@@ -174,4 +121,54 @@ goToHighscoresEl.addEventListener("click",function(event){
 returnToStartEl.addEventListener("click",function(event){
     event.preventDefault();
     changeDisplay(activePage, startPageEl);
+})
+
+
+//our timer 
+function startGame(){
+    secondsLeft = 75;
+    playerScore = 0;
+    questionNumber = 0;
+
+    var timerInterval = setInterval(function(){
+        secondsLeft--;
+        timerEl.textContent = secondsLeft;
+        
+        if(secondsLeft <= 0){
+            clearInterval(timerInterval);
+            changeDisplay(activePage, endgamePageEl);
+
+        }
+        console.log(secondsLeft);
+    },1000)
+}
+
+function checkAnswer(playerAnswer){
+    if(playerAnswer === questions[questionNumber].actualAnswer){
+        if(questionNumber === 9){
+            secondsLeft = 0;
+            playerScore++;
+        }else{        
+            playerScore++;
+            questionNumber++;
+            changeQuestion();
+            checkAnswerEl.innerHTML = "Correct!";
+        }
+    }else{
+        checkAnswerEl.innerHTML = "Incorrect!";
+        secondsLeft = secondsLeft - 10;
+    }
+}
+
+
+questionPageEl.addEventListener("click",function(event){
+    event.preventDefault();
+    var element = event.target;
+
+    if (element.matches("li")){
+        var state = element.getAttribute("data-answer");
+        console.log(state);
+        checkAnswer(state);
+    }
+
 })
