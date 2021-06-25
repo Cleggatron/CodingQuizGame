@@ -6,7 +6,9 @@ var timer = document.querySelector("#timer")
 var startquiz = document.querySelector("#startQuiz")
 var submitScore = document.querySelector("#submitScore");
 var questionTextEl = document.querySelector("#question");
-var answerTextEl = document.querySelectorAll(".answer");
+
+var answerTextEl = document.querySelectorAll(".answer"); //select all and access indivdually to populate answer fields
+
 
 
 var highScores = document.querySelector("#highscores");
@@ -104,6 +106,7 @@ startquiz.addEventListener("click", function(event){
     event.preventDefault();
     changeDisplay(startPage, questionPage);
     startGame();
+    changeQuestion();
 })
 
 
