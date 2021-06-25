@@ -1,10 +1,10 @@
-var startPage = document.querySelector("#startPage");
-var questionPage = document.querySelector("#questionPage");
-var endgamePage = document.querySelector("#endgamePage");
-var scorecardPage = document.querySelector("#scorecardPage");
+var startPageEL = document.querySelector("#startPage");
+var questionPageEl = document.querySelector("#questionPage");
+var endgamePageEl = document.querySelector("#endgamePage");
+var scorecardPageEl = document.querySelector("#scorecardPage");
 var timer = document.querySelector("#timer")
-var startquiz = document.querySelector("#startQuiz")
-var submitScore = document.querySelector("#submitScore");
+var startquizEl = document.querySelector("#startQuiz")
+var submitScoreEl = document.querySelector("#submitScore");
 var questionTextEl = document.querySelector("#question");
 
 var answerTextEl = document.querySelectorAll(".answer"); //select all and access indivdually to populate answer fields
@@ -14,7 +14,7 @@ var answerTextEl = document.querySelectorAll(".answer"); //select all and access
 var highScores = document.querySelector("#highscores");
 var questionNumber = 0;
 //variable to log what should be visible at the current time
-var activePage = startPage;
+var activePage = startPageEl;
 
 var leaderboard = [];
 var questions =[
@@ -42,7 +42,7 @@ function startGame(){
 
         if(secondsLeft === 0){
             clearInterval(timerInterval);
-            changeDisplay(questionPage, endgamePage);
+            changeDisplay(questionPageEl, endgamePageEl);
         }
     },1000)
 }
@@ -101,16 +101,18 @@ function changeQuestion(){
 }
 
 
+
+
 //event listeners
-startquiz.addEventListener("click", function(event){
+startquizEl.addEventListener("click", function(event){
     event.preventDefault();
-    changeDisplay(startPage, questionPage);
+    changeDisplay(startPageEl, questionPageEl);
     startGame();
     changeQuestion();
 })
 
 
-submitScore.addEventListener("click", function(event){
+submitScoreEl.addEventListener("click", function(event){
     event.preventDefault();
     //Variable stored locally to refresh on click
     var initials = document.querySelector('#initials').value;
@@ -119,8 +121,9 @@ submitScore.addEventListener("click", function(event){
         return;
     }else{
         storeScore(initials, playerScore);
-        changeDisplay(endgamePage, scorecardPage);
+        changeDisplay(endgamePageEl, scorecardPageEl);
         populateLeaderboard();
     }
 });
 
+questionPageEl
