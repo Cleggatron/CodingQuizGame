@@ -83,12 +83,58 @@ function populateLeaderboard(){
     }
 }
 
+//update the current question
 function changeQuestion(){
     questionTextEl.innerHTML = questions[questionNumber].question;
     answerTextEl[0].innerHTML = questions[questionNumber].answer1;
     answerTextEl[1].innerHTML = questions[questionNumber].answer2;
     answerTextEl[2].innerHTML = questions[questionNumber].answer3;
     answerTextEl[3].innerHTML = questions[questionNumber].answer4;
+}
+
+//our timer 
+function startGame(){
+    secondsLeft = 75;
+    playerScore = 0;
+    questionNumber = 0;
+
+    var timerInterval = setInterval(function(){
+        secondsLeft--;
+        timerEl.textContent = secondsLeft;
+        
+        if(secondsLeft <= 0){
+            clearInterval(timerInterval);
+            changeDisplay(activePage, endgamePageEl);
+            finalScoreEl.innerHTML = playerScore;
+        }
+    },1000)
+}
+
+//checks if the clicked answer is true
+function checkAnswer(playerAnswer){
+    if(playerAnswer === questions[questionNumber].actualAnswer){
+        if(questionNumber === 9){
+            secondsLeft = 0;
+            playerScore++;
+        }else{        
+            playerScore++;
+            questionNumber++;
+            changeQuestion();
+            checkAnswerEl.innerHTML = "Correct!";
+        }
+    }else{
+        checkAnswerEl.innerHTML = "Incorrect!";
+        secondsLeft = secondsLeft - 10;
+    }
+}
+
+function reset(){
+    secondsLeft = 75;
+    playerscore = 0;
+    questionNumber = 0;
+    checkAnswerEl.innerHTML = "";
+    changeQuestion();
+    timerEl.innerHTML = secondsLeft;
 }
 
 //event listeners
@@ -111,6 +157,7 @@ submitScoreEl.addEventListener("click", function(event){
         storeScore(initials, playerScore);
         changeDisplay(endgamePageEl, scorecardPageEl);
         populateLeaderboard();
+        reset()
     }
 });
 
@@ -119,53 +166,20 @@ goToHighscoresEl.addEventListener("click",function(event){
     event.preventDefault();
     changeDisplay(activePage, scorecardPageEl);
     populateLeaderboard();
+    reset()
 })
 
 returnToStartEl.addEventListener("click",function(event){
     event.preventDefault();
     changeDisplay(activePage, startPageEl);
+    reset()
 })
 
 goBackEl.addEventListener("click",function(event){
     event.preventDefault();
     changeDisplay(activePage, startPageEl);
+    reset()
 })
-
-//our timer 
-function startGame(){
-    secondsLeft = 75;
-    playerScore = 0;
-    questionNumber = 0;
-
-    var timerInterval = setInterval(function(){
-        secondsLeft--;
-        timerEl.textContent = secondsLeft;
-        
-        if(secondsLeft <= 0){
-            clearInterval(timerInterval);
-            changeDisplay(activePage, endgamePageEl);
-            finalScoreEl.innerHTML = playerScore;
-        }
-    },1000)
-}
-
-function checkAnswer(playerAnswer){
-    if(playerAnswer === questions[questionNumber].actualAnswer){
-        if(questionNumber === 9){
-            secondsLeft = 0;
-            playerScore++;
-        }else{        
-            playerScore++;
-            questionNumber++;
-            changeQuestion();
-            checkAnswerEl.innerHTML = "Correct!";
-        }
-    }else{
-        checkAnswerEl.innerHTML = "Incorrect!";
-        secondsLeft = secondsLeft - 10;
-    }
-}
-
 
 questionPageEl.addEventListener("click",function(event){
     event.preventDefault();
