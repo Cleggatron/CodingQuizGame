@@ -1,3 +1,8 @@
+:root{
+    --primaryCol: purple;
+    --primaryTxtCol: white;
+}
+
 *{
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -6,6 +11,13 @@
 header{
     display: flex;
     justify-content: space-between;
+    color: var(--primaryTxtCol);
+    background-color: var(--primaryCol);
+    padding: 30px;
+}
+header p{
+    width: 30%;
+    text-align: center;
 }
 
 main{
@@ -29,9 +41,9 @@ div{
 
 
 button, li{
-    background-color: purple;
+    background-color: var(--primaryCol);
     border-radius: 5px;
-    color: white;
+    color: var(--primaryTxtCol);
     padding: 5px 20px;
     margin: 5px 0;
 }
@@ -40,4 +52,24 @@ button, li{
 /* starting display settings */
 #questionPage, #endgamePage, #scorecardPage{
     display: none;
+}
+
+@media screen and (max-width : 600px) {
+    header{
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    header p{
+        width: 100%
+    }
+}
+
+main{
+    padding: 10px;
+}
+
+div{
+    margin: 0 5%;
 }
