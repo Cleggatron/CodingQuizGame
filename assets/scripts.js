@@ -10,8 +10,9 @@ var submitScoreEl = document.querySelector("#submitScore");
 var checkAnswerEl = document.querySelector("#checkAnswer");
 var questionTextEl = document.querySelector("#question");
 var answerTextEl = document.querySelectorAll(".answer"); //select all and access indivdually to populate answer fields
-
 var leaderboardEl = document.querySelector("#leaderboard");
+var goBackEl = document.querySelector("#goBack");
+var finalScoreEl = document.querySelector("#finalScore")
 
 //variable to log what should be visible at the current time
 var activePage = startPageEl;
@@ -69,6 +70,9 @@ function storeScore(initials, currentScore){
 
 //print the leaderboard
 function populateLeaderboard(){
+    if(!JSON.parse(localStorage.getItem("leaderboard"))){
+        return;
+    }
     leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
     //print our leaderboard
     for(i = 0; i < leaderboard.length; i++){
@@ -86,8 +90,6 @@ function changeQuestion(){
     answerTextEl[2].innerHTML = questions[questionNumber].answer3;
     answerTextEl[3].innerHTML = questions[questionNumber].answer4;
 }
-
-
 
 //event listeners
 startQuizEl.addEventListener("click", function(event){
@@ -116,6 +118,7 @@ submitScoreEl.addEventListener("click", function(event){
 goToHighscoresEl.addEventListener("click",function(event){
     event.preventDefault();
     changeDisplay(activePage, scorecardPageEl);
+    populateLeaderboard();
 })
 
 returnToStartEl.addEventListener("click",function(event){
@@ -123,6 +126,10 @@ returnToStartEl.addEventListener("click",function(event){
     changeDisplay(activePage, startPageEl);
 })
 
+goBackEl.addEventListener("click",function(event){
+    event.preventDefault();
+    changeDisplay(activePage, startPageEl);
+})
 
 //our timer 
 function startGame(){
@@ -137,9 +144,8 @@ function startGame(){
         if(secondsLeft <= 0){
             clearInterval(timerInterval);
             changeDisplay(activePage, endgamePageEl);
-
+            finalScoreEl.innerHTML = playerScore;
         }
-        console.log(secondsLeft);
     },1000)
 }
 
@@ -167,7 +173,6 @@ questionPageEl.addEventListener("click",function(event){
 
     if (element.matches("li")){
         var state = element.getAttribute("data-answer");
-        console.log(state);
         checkAnswer(state);
     }
 
