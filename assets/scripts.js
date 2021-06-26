@@ -11,7 +11,7 @@ var checkAnswerEl = document.querySelector("#checkAnswer");
 var questionTextEl = document.querySelector("#question");
 var answerTextEl = document.querySelectorAll(".answer"); //select all and access indivdually to populate answer fields
 
-var highScores = document.querySelector("#highscores");
+var leaderboardEl = document.querySelector("#leaderboard");
 
 //variable to log what should be visible at the current time
 var activePage = startPageEl;
@@ -75,7 +75,7 @@ function populateLeaderboard(){
         var content = leaderboard[i];
         var li = document.createElement("li");
         li.textContent = content.name + ": " + content.score;
-        highScores.appendChild(li);
+        leaderboardEl.appendChild(li);
     }
 }
 
