@@ -12,7 +12,8 @@ var questionTextEl = document.querySelector("#question");
 var answerTextEl = document.querySelectorAll(".answer"); //select all and access indivdually to populate answer fields
 var leaderboardEl = document.querySelector("#leaderboard");
 var goBackEl = document.querySelector("#goBack");
-var finalScoreEl = document.querySelector("#finalScore")
+var finalScoreEl = document.querySelector("#finalScore");
+var clearHighScoresEl = document.querySelector("#clearHighScores")
 
 //variable to log what should be visible at the current time
 var activePage = startPageEl;
@@ -188,6 +189,15 @@ questionPageEl.addEventListener("click",function(event){
     if (element.matches("li")){
         var state = element.getAttribute("data-answer");
         checkAnswer(state);
+    }
+
+})
+
+clearHighScoresEl.addEventListener("click",function(event){
+    event.preventDefault();
+    leaderboardEl.innerHTML = "";
+    if(localStorage.getItem("leaderboard")!== null){
+    localStorage.removeItem("leaderboard");
     }
 
 })
