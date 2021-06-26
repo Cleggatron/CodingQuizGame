@@ -16,7 +16,7 @@ Bear in mind that the persistent score tracking will use the local storage of th
 ## Useage
 Once the page is loaded click on the Start Game button to run the quiz. Once completed a score can be submitted which will persist in local storage. Buttons in the pages and in the navbar at the top will assist in moving about the page.
 
-![screenshot of quiz in action](.\assets\Screenshot.png)
+![screenshot of quiz in action](assets/Screenshot.png)
 
 ## Credits
 
