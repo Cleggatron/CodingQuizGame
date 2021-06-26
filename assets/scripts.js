@@ -93,7 +93,7 @@ function changeQuestion(){
     answerTextEl[3].innerHTML = questions[questionNumber].answer4;
 }
 
-//our timer 
+//our timer. Also handles the transition at quiz end
 function startGame(){
     secondsLeft = 75;
     playerScore = 0;
@@ -129,6 +129,7 @@ function checkAnswer(playerAnswer){
     }
 }
 
+//reset some of the variables and HTML to tidy up once quiz is over
 function reset(){
     secondsLeft = 75;
     playerscore = 0;
@@ -166,7 +167,10 @@ submitScoreEl.addEventListener("click", function(event){
 goToHighscoresEl.addEventListener("click",function(event){
     event.preventDefault();
     changeDisplay(activePage, scorecardPageEl);
-    populateLeaderboard();
+    //only populates leaderboard if it has not already run
+    if(leaderboardEl.innerHTML === ""){
+        populateLeaderboard();
+    }
     reset()
 })
 
