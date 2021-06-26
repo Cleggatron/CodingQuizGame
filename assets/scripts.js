@@ -47,6 +47,7 @@ function changeDisplay(currentPage, destinationPage){
 
 //function to update the scores on local storrage
 function storeScore(initials, currentScore){
+    leaderboard = [];
     var submission = {
         name: initials.trim(),
         score: currentScore
